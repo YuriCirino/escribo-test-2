@@ -18,7 +18,7 @@ model User {
   phoneNumbers PhoneNumbers[]   
   createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now()) @updatedAt
-  lastLogin DateTime?
+  lastLogin DateTime @default(now())
 }
 model PhoneNumbers{
   id String @id @default(uuid())
