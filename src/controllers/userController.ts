@@ -37,7 +37,7 @@ async function signUp(req: Request, res: Response) {
 
     try {
         const bodyParsed = userSchema.parse(bodyParams)
-        let userAlreadyExists = await prisma.user.findUnique(
+        const userAlreadyExists = await prisma.user.findUnique(
             { where: { email: bodyParsed.email } }
         )
 
@@ -129,15 +129,14 @@ async function getUserById(req: Request, res: Response) {
         return res.status(401).send({ "mensagem": "Não autorizado" })
     }
     const bearerToken = bearerHeader?.split(' ')[1]
-    jwt.verify(bearerToken, SECRET, async (error, decoded) => {
+    jwt.verify(bearerToken, SECRET, async (error) => {
         if (error) {
             if (error.name == 'TokenExpiredError') return res.status(401).send({ "mensagem": "Sessão Inválida" })
             if (error.name == 'JsonWebTokenError') return res.status(401).send({ "mensagem": "Não autorizado" })
             else return res.status(401).send({ "mensagem": "Não autorizado" })
         } else {
-
             const user = await prisma.user.findUnique({ where: { id }, include: { phoneNumbers: true } })
-            console.log(user)
+            
             if (user == null) return res.status(401).send({ "mensagem": "Sessão Inválida" })
             else return res.send({
                 nome: user!.name, email: user!.email,
