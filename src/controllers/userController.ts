@@ -131,12 +131,12 @@ async function getUserById(req: Request, res: Response) {
     const bearerToken = bearerHeader?.split(' ')[1]
     jwt.verify(bearerToken, SECRET, async (error, decoded) => {
         if (error) {
-            if (error.name == 'TokenExpiredError') return res.send(401).send({ "mensagem": "Sessão Inválida" })
-            if (error.name == 'JsonWebTokenError') return res.send(401).send({ "mensagem": "Não autorizado" })
-            else res.send(401).send({ "mensagem": "Não autorizado" })
+            if (error.name == 'TokenExpiredError') return res.status(401).send({ "mensagem": "Sessão Inválida" })
+            if (error.name == 'JsonWebTokenError') return res.status(401).send({ "mensagem": "Não autorizado" })
+            else res.status(401).send({ "mensagem": "Não autorizado" })
         } else {
             const user = await prisma.user.findUnique({ where: { id }, include: { phoneNumbers: true } })
-            if (user == null) res.send(401).send({ "mensagem": "Sessão Inválida" })
+            if (user == null) res.status(401).send({ "mensagem": "Sessão Inválida" })
             res.send({
                 nome: user!.name, email: user!.email,
                 data_criacao: user!.createdAt,
