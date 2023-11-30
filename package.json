@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsx src/server.ts",
-    "start:dev": "tsx watch src/server.ts"
+    "start:dev": "tsx watch src/server.ts",
+    "build": "tsc --build"
   },
   "keywords": [
     "express"
@@ -23,7 +24,6 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "moment": "^2.29.4",
     "zod": "^3.22.4"
   },
   "devDependencies": {

@@ -1,13 +1,10 @@
-import express from 'express';
+import express = require('express');
 import { prisma } from './lib/prisma';
 import userRouter from './routes/user'
-import bodyParser from 'body-parser';
-import formatDate from './utils'
-
+import * as bodyParser from 'body-parser';
 const app = express()
 app.use(bodyParser.json())
 app.use(userRouter)
-console.log(formatDate(new Date()))
 
 app.get('/deleteall', async (request, response) => {
     // const userCreated = await prisma.user.create({data:{name:"John Doe",email:"jd@email.com",password:"senhafraca2"}})
