@@ -81,10 +81,14 @@ async function signUp(req: Request, res: Response) {
 async function signIn(req: Request, res: Response) {
 
     const signInBodySchema = z.object({ email: z.string().email(), password: z.string() })
+
     const bodyParams = { email: req.body.email, password: req.body.senha }
+
+    
     try {
         const { email, password } = signInBodySchema.parse(bodyParams)
         const user = await prisma.user.findUnique({ where: { email } })
+
         if (user == null) { return res.status(404).send({ mensagem: "Usuário e/ou senha inválidos" }) }
 
         const isValidPassword = await bcrypt.compare(password, user.password)
@@ -114,7 +118,7 @@ async function signIn(req: Request, res: Response) {
         }
 
     } catch (error) {
-
+        return res.status(401).send({mensagem:"Parâmetros inválidos"})
     }
 }
 
