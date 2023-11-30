@@ -133,11 +133,13 @@ async function getUserById(req: Request, res: Response) {
         if (error) {
             if (error.name == 'TokenExpiredError') return res.status(401).send({ "mensagem": "Sessão Inválida" })
             if (error.name == 'JsonWebTokenError') return res.status(401).send({ "mensagem": "Não autorizado" })
-            else res.status(401).send({ "mensagem": "Não autorizado" })
+            else return res.status(401).send({ "mensagem": "Não autorizado" })
         } else {
+
             const user = await prisma.user.findUnique({ where: { id }, include: { phoneNumbers: true } })
-            if (user == null) res.status(401).send({ "mensagem": "Sessão Inválida" })
-            res.send({
+            console.log(user)
+            if (user == null) return res.status(401).send({ "mensagem": "Sessão Inválida" })
+            else return res.send({
                 nome: user!.name, email: user!.email,
                 data_criacao: user!.createdAt,
                 data_atualizacao: user!.updatedAt,
