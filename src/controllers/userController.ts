@@ -62,7 +62,7 @@ async function signUp(req: Request, res: Response) {
                             }
                         })
                         const payload: IPayload = { id: userCreated.id, nome: userCreated.name }
-                        const token = jwt.sign(payload, SECRET, { expiresIn: "1m" })
+                        const token = jwt.sign(payload, SECRET, { expiresIn: "30m" })
                         return res.send({
                             id: userCreated.id,
                             data_criacao: userCreated.createdAt,
@@ -97,7 +97,7 @@ async function signIn(req: Request, res: Response) {
 
         else {
             const payload: IPayload = { id: user.id, nome: user.name }
-            const token = jwt.sign(payload, SECRET, { expiresIn: "1h" })
+            const token = jwt.sign(payload, SECRET, { expiresIn: "30m" })
             await prisma.user.update({
                 where: {
                     id: user.id,
