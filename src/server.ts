@@ -1,7 +1,7 @@
-import express = require('express');
+import express from 'express';
 import { prisma } from './lib/prisma';
 import userRouter from './routes/user'
-import * as bodyParser from 'body-parser';
+import bodyParser from 'body-parser';
 const app = express()
 app.use(bodyParser.json())
 app.use(userRouter)
