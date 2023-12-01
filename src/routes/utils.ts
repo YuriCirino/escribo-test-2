@@ -14,4 +14,9 @@ router.get('/users', async (request, response) => {
     const allUsers = await prisma.user.findMany({})
     response.send(allUsers)
 })
+
+router.get('/',(request,response)=> {
+    return response.send({mensagem:"Hello Escribo"})
+})
+
 export default router
